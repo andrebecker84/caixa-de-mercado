@@ -1,12 +1,13 @@
 # caixaMercado
 
-![Python](https://img.shields.io/badge/Python-3.14.3-blue?logo=python)
+![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0.48-red)
 ![MySQL](https://img.shields.io/badge/MySQL-8.4.8_LTS-orange?logo=mysql)
 ![PyMySQL](https://img.shields.io/badge/PyMySQL-1.1.2-lightgrey)
-![Flet](https://img.shields.io/badge/Flet-0.25.2-blueviolet?logo=flutter)
+![Flet](https://img.shields.io/badge/Flet-latest-blueviolet?logo=flutter)
 ![pytest](https://img.shields.io/badge/pytest-9.0.2-green?logo=pytest)
 ![hypothesis](https://img.shields.io/badge/hypothesis-6.151.9-purple)
+![Playwright](https://img.shields.io/badge/Playwright-1.49.0-orange?logo=playwright)
 ![Docker](https://img.shields.io/badge/Docker-27.x-blue?logo=docker)
 ![License](https://img.shields.io/badge/license-MIT-brightgreen)
 
@@ -73,6 +74,7 @@ caixaMercado/
 │   │   ├── repositories/            # interfaces abstratas (ABC) — zero dependência de ORM
 │   │   │   ├── cliente_repository.py
 │   │   │   ├── compra_repository.py
+│   │   │   ├── operador_repository.py
 │   │   │   └── produto_repository.py
 │   │   └── validators/              # Strategy: ValidadorNome compõe RegraValidacao
 │   │       └── nome_validator.py
@@ -81,42 +83,49 @@ caixaMercado/
 │   │   ├── bridge.py                # InputBridge — threading.Event para sincronizar use cases
 │   │   ├── theme.py                 # paleta dark/light, sombras macOS, animações
 │   │   ├── controller.py            # PageController — mutações de UI centralizadas
+│   │   ├── operators.py             # helpers de operadores (cor, iniciais)
 │   │   ├── adapters/
 │   │   │   ├── atendimento_adapter.py  # AtendimentoFletAdapter(AtendimentoPort)
 │   │   │   ├── cliente_adapter.py      # ClienteFletAdapter(ClientePort)
 │   │   │   └── caixa_adapter.py        # CaixaFletAdapter(CaixaPort)
 │   │   └── pages/
 │   │       ├── splash.py            # tela de carregamento com inicialização do banco em thread
-│   │       └── menu.py              # menu principal com cards hover-animados
+│   │       ├── login.py             # autenticação de operador
+│   │       ├── dashboard.py         # visão geral com KPIs e gráficos
+│   │       ├── estoque.py           # listagem e status de estoque por produto
+│   │       ├── relatorios.py        # relatórios de vendas, calendário e top produtos
+│   │       └── cadastros.py         # CRUD de produtos, clientes e operadores
 │   ├── infrastructure/
 │   │   ├── sistema_service.py       # inicialização, seed e ciclo de vida da sessão
 │   │   └── repositories/            # implementações SQLAlchemy das interfaces de domínio
 │   │       ├── cliente_repository.py
 │   │       ├── compra_repository.py
+│   │       ├── operador_repository.py
 │   │       └── produto_repository.py
 │   ├── shared/                      # utilitários puros reutilizáveis
 │   ├── assets/                      # estilos ANSI e logomarca (modo terminal)
 │   └── views/                       # I/O de terminal + adapters de terminal para as ports
 │       ├── atendimento_adapter.py   # AtendimentoTerminalAdapter(AtendimentoPort)
 │       ├── cliente_adapter.py       # ClienteTerminalAdapter(ClientePort)
-│       └── caixa_adapter.py         # CaixaTerminalAdapter(CaixaPort)
+│       ├── caixa_adapter.py         # CaixaTerminalAdapter(CaixaPort)
+│       └── sistema_view.py          # menu principal do terminal
+├── assets/                          # SVG logos usados pelo Flet
 ├── database/
 │   ├── connection/      # ConexaoDB e variáveis de ambiente
 │   └── data/            # scripts SQL e seed CSV
 ├── docker/
-│   ├── Dockerfile               # multi-stage: base → app (CLI) → test
-│   └── Dockerfile.flet          # multi-stage: base → flet-app (web) → test
-├── docker-compose.yml   # compose unificado: db + flet + app + test + adminer
+│   ├── Dockerfile               # multi-stage: base → app (CLI) → flet → test → playwright
+│   └── docker-compose.yml       # compose unificado: db + flet + app + test + playwright + adminer
 ├── .env.example         # template de variáveis para Docker Compose
-├── k8s/                 # manifestos Kubernetes (apenas MySQL)
+├── k8s/                 # manifestos Kubernetes (MySQL + Flet deployment)
 ├── docs/                # DER e relatório técnico
 ├── tests/
 │   ├── unit/            # testes determinísticos
-│   └── property/        # property-based tests (hypothesis)
+│   ├── property/        # property-based tests (hypothesis)
+│   ├── playwright_test.py  # testes E2E Playwright
+│   └── test_visual.py      # testes visuais (snapshots)
 ├── main.py              # entry point — CLI (--cli) ou Flet web (padrão) ou desktop (--desktop)
 ├── requirements.txt
-├── requirements-flet.txt
-├── requirements-dev.txt
 ├── run.bat
 └── run.sh
 ```
@@ -171,16 +180,17 @@ Dois arquivos compose independentes foram consolidados em um único `docker-comp
 
 | Tecnologia | Versão |
 |---|---|
-| Python | 3.14.3 |
+| Python | 3.13 (Docker) |
 | SQLAlchemy | 2.0.48 |
 | PyMySQL | 1.1.2 |
 | python-dotenv | 1.2.1 |
 | tabulate | 0.10.0 |
 | tqdm | 4.67.3 |
-| Flet | 0.25.2 |
+| Flet | latest |
 | pytest | 9.0.2 |
 | pytest-cov | 7.0.1 |
 | hypothesis | 6.151.9 |
+| Playwright | 1.49.0 |
 | MySQL | 8.4.8 LTS |
 | Docker | 27.x+ |
 
@@ -190,7 +200,7 @@ Dois arquivos compose independentes foram consolidados em um único `docker-comp
 
 ```
                     ┌──────────────────────┐
-                    │  rede: frontend      │
+                    │  rede: web_net       │
                     │  (acesso externo)    │
                     └──────────┬───────────┘
                                │
@@ -200,7 +210,7 @@ Dois arquivos compose independentes foram consolidados em um único `docker-comp
               └────────────────┬────────────────┘
                                │
                     ┌──────────┴───────────┐
-                    │  rede: backend       │
+                    │  rede: db_net        │
                     │  (isolada, interna)  │
                     └──────────┬───────────┘
                                │
