@@ -81,7 +81,7 @@ _cmd_cli() {
 _cmd_flet_docker() {
     _check_docker || return
     echo -e "${MUTED}Iniciando banco + Flet via Docker...${RESET}"
-    docker compose -p caixamercado -f docker/docker-compose.yml --env-file .env up --build db flet &
+    docker compose -p caixamercado -f docker/docker-compose.yml --env-file .env up --build --force-recreate db flet &
     sleep 4
     echo -e "${SUCCESS}Abrindo http://localhost:8550${RESET}"
     _abrir_url "http://localhost:8550"
@@ -125,6 +125,7 @@ _cmd_stop() {
     _check_docker || return
     echo -e "${MUTED}Parando containers... (dados do banco mantidos)${RESET}"
     docker compose -p caixamercado -f docker/docker-compose.yml --env-file .env down
+    docker rm -f caixa_db caixa_flet caixa_cli caixa_test caixa_playwright 2>/dev/null || true
     echo -e "${SUCCESS}Containers parados.${RESET}"
 }
 
@@ -143,7 +144,7 @@ _cmd_reset() {
     echo -e "\n${MUTED}Removendo volumes...${RESET}"
     docker compose -p caixamercado -f docker/docker-compose.yml --env-file .env down -v
     echo -e "${MUTED}Reiniciando com dados iniciais...${RESET}"
-    docker compose -p caixamercado -f docker/docker-compose.yml --env-file .env up --build db flet
+    docker compose -p caixamercado -f docker/docker-compose.yml --env-file .env up --build --force-recreate db flet
 }
 
 # ── Loop principal ────────────────────────────────────────────

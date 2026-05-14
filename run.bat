@@ -57,7 +57,7 @@ pause & goto header
 :cmd_flet_docker
 where docker >nul 2>&1 || (echo [ERRO] Docker nao encontrado. & pause & goto header)
 echo  Iniciando banco + Flet via Docker...
-docker compose -p caixamercado -f docker/docker-compose.yml --env-file .env up --build db flet
+docker compose -p caixamercado -f docker/docker-compose.yml --env-file .env up --build --force-recreate db flet
 pause & goto header
 
 :cmd_flet_local
@@ -107,6 +107,7 @@ pause & goto header
 where docker >nul 2>&1 || (echo [ERRO] Docker nao encontrado. & pause & goto header)
 echo  Parando containers...
 docker compose -p caixamercado -f docker/docker-compose.yml --env-file .env down
+docker rm -f caixa_db caixa_flet caixa_cli caixa_test caixa_playwright 2>nul
 echo  Containers parados.
 pause & goto header
 
@@ -124,5 +125,5 @@ echo.
 echo  Removendo volumes...
 docker compose -p caixamercado -f docker/docker-compose.yml --env-file .env down -v
 echo  Reiniciando com dados iniciais...
-docker compose -p caixamercado -f docker/docker-compose.yml --env-file .env up --build db flet
+docker compose -p caixamercado -f docker/docker-compose.yml --env-file .env up --build --force-recreate db flet
 pause & goto header

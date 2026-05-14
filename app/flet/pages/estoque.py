@@ -333,4 +333,4 @@ class EstoquePage:
                  th.danger(page)),
             card(ft.Icons.ATTACH_MONEY,  "Valor total (R$)",
                  f"{valor:,.2f}", "#FFB700"),
-        ], spacing=14, vertical_alignment=ft.CrossAxisAlignment.STRETCH)
+        ], spacing=14, vertical_alignment=ft.CrossAxisAlignment.START)

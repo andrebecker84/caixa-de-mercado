@@ -38,41 +38,56 @@ class CadastrosPage:
     def _render(self) -> None:
         page = self._ctrl.page
 
-        tabs = ft.Tabs(
-            length=3,
-            selected_index=self._tab_index,
-            on_change=self._on_tab_change,
-            animation_duration=200,
-            expand=True,
-            content=ft.Column(
-                expand=True,
-                controls=[
-                    ft.TabBar(
-                        tabs=[
-                            ft.Tab(label="Produtos",   icon=ft.Icons.INVENTORY_2),
-                            ft.Tab(label="Clientes",   icon=ft.Icons.PEOPLE),
-                            ft.Tab(label="Operadores", icon=ft.Icons.BADGE),
-                        ]
-                    ),
-                    ft.TabBarView(
-                        expand=True,
-                        controls=[
-                            self._build_produtos(page),
-                            self._build_clientes(page),
-                            self._build_operadores(page),
-                        ],
-                    ),
-                ],
-            ),
-        )
+        _TAB_DEFS = [
+            ("Produtos",   ft.Icons.INVENTORY_2),
+            ("Clientes",   ft.Icons.PEOPLE),
+            ("Operadores", ft.Icons.BADGE),
+        ]
+
+        def _build_tab_bar() -> ft.Row:
+            btns = []
+            for i, (label, icon) in enumerate(_TAB_DEFS):
+                ativo = i == self._tab_index
+                cor   = th.primary(page)
+                btns.append(ft.Container(
+                    content=ft.Row([
+                        ft.Icon(icon, size=14,
+                                color=ft.Colors.WHITE if ativo else th.muted(page)),
+                        ft.Text(label, size=12,
+                                weight=ft.FontWeight.BOLD if ativo else ft.FontWeight.NORMAL,
+                                color=ft.Colors.WHITE if ativo else th.text(page)),
+                    ], spacing=6, tight=True),
+                    bgcolor=cor if ativo else ft.Colors.with_opacity(0.06, cor),
+                    border=ft.Border.all(1, cor if ativo
+                                        else ft.Colors.with_opacity(0.3, cor)),
+                    border_radius=20,
+                    padding=ft.Padding(left=16, top=8, right=16, bottom=8),
+                    ink=True,
+                    ink_color=ft.Colors.with_opacity(0.08, cor),
+                    on_click=lambda e, idx=i: self._select_tab(idx),
+                ))
+            return ft.Row(btns, spacing=8)
+
+        _builders = [
+            lambda: self._build_produtos(page),
+            lambda: self._build_clientes(page),
+            lambda: self._build_operadores(page),
+        ]
+        tab_content = _builders[self._tab_index]()
 
         self._ctrl.set_content(
             ft.Column([
                 self._build_header(page),
                 ft.Container(height=4),
-                tabs,
-            ], spacing=0, expand=True),
+                _build_tab_bar(),
+                ft.Container(height=12),
+                tab_content,
+            ], spacing=0, scroll=ft.ScrollMode.AUTO),
         )
+
+    def _select_tab(self, index: int) -> None:
+        self._tab_index = index
+        self._render()
 
     def _on_tab_change(self, e):
         self._tab_index = e.control.selected_index

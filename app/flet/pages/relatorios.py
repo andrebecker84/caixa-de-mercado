@@ -110,7 +110,7 @@ class RelatoriosPage:
                 f"R$ {semana:,.2f}", th.accent(page)),
             kpi(ft.Icons.CALENDAR_TODAY, "Vendas no mês",
                 f"R$ {mes:,.2f}", "#FFB700"),
-        ], spacing=14, vertical_alignment=ft.CrossAxisAlignment.STRETCH)
+        ], spacing=14, vertical_alignment=ft.CrossAxisAlignment.START)
 
     # ── Monthly calendar ──────────────────────────────────────────
 

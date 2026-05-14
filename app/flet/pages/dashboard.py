@@ -177,7 +177,7 @@ class DashboardPage:
                             f"R$ {mes:,.2f}", "#FFB700"),
             self._stat_card(page, ft.Icons.WAREHOUSE, "Valor em estoque",
                             f"R$ {val_estoque:,.2f}", "#4ECDC4"),
-        ], spacing=14, vertical_alignment=ft.CrossAxisAlignment.STRETCH)
+        ], spacing=14, vertical_alignment=ft.CrossAxisAlignment.START)
 
     # ── Weekly bar chart ──────────────────────────────────────────
 
