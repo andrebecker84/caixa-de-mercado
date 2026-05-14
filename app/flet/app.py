@@ -499,6 +499,17 @@ def main(page: ft.Page) -> None:
     def show_estoque():
         if not _sessao:
             return
+        color = th.primary(page)
+        ctrl.set_content(
+            ft.Container(
+                content=ft.Column([
+                    ft.ProgressRing(width=32, height=32, stroke_width=3, color=color),
+                    ft.Text("Carregando estoque...", size=13, color=th.muted(page)),
+                ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=14),
+                alignment=ft.Alignment(0, 0),
+                expand=True,
+            )
+        )
         def _load():
             try:
                 _, produto_repo, _, _ = _repos()
@@ -510,6 +521,17 @@ def main(page: ft.Page) -> None:
     def show_relatorios():
         if not _sessao:
             return
+        color = th.primary(page)
+        ctrl.set_content(
+            ft.Container(
+                content=ft.Column([
+                    ft.ProgressRing(width=32, height=32, stroke_width=3, color=color),
+                    ft.Text("Carregando relatórios...", size=13, color=th.muted(page)),
+                ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=14),
+                alignment=ft.Alignment(0, 0),
+                expand=True,
+            )
+        )
         def _load():
             try:
                 _, _, compra_repo, operador_repo = _repos()

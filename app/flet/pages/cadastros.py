@@ -29,7 +29,10 @@ class CadastrosPage:
             try:
                 self._render()
             except Exception as ex:
-                self._ctrl.notify(f"Erro ao renderizar cadastros: {ex}", ok=False)
+                try:
+                    self._ctrl.notify(f"Erro ao renderizar cadastros: {ex}", ok=False)
+                except Exception:
+                    pass
         self._ctrl.page.run_task(_render_async)
 
     def _render(self) -> None:

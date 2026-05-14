@@ -29,7 +29,10 @@ class RelatoriosPage:
             try:
                 self._render(now, hoje, transac, media, semana, mes, top, cal_dados)
             except Exception as ex:
-                self._ctrl.notify(f"Erro ao renderizar relatórios: {ex}", ok=False)
+                try:
+                    self._ctrl.notify(f"Erro ao renderizar relatórios: {ex}", ok=False)
+                except Exception:
+                    pass
         self._ctrl.page.run_task(_render_async)
 
     def _render(self, now, hoje, transac, media, semana, mes, top, cal_dados) -> None:
