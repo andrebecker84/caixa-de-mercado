@@ -26,7 +26,10 @@ class RelatoriosPage:
         top       = self._repo.top_produtos(10)
         cal_dados = self._repo.vendas_calendario_mes(now.year, now.month)
         async def _render_async():
-            self._render(now, hoje, transac, media, semana, mes, top, cal_dados)
+            try:
+                self._render(now, hoje, transac, media, semana, mes, top, cal_dados)
+            except Exception as ex:
+                self._ctrl.notify(f"Erro ao renderizar relatórios: {ex}", ok=False)
         self._ctrl.page.run_task(_render_async)
 
     def _render(self, now, hoje, transac, media, semana, mes, top, cal_dados) -> None:

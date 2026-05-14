@@ -26,7 +26,10 @@ class CadastrosPage:
 
     def show(self) -> None:
         async def _render_async():
-            self._render()
+            try:
+                self._render()
+            except Exception as ex:
+                self._ctrl.notify(f"Erro ao renderizar cadastros: {ex}", ok=False)
         self._ctrl.page.run_task(_render_async)
 
     def _render(self) -> None:

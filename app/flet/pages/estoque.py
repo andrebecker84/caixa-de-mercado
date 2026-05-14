@@ -43,7 +43,10 @@ class EstoquePage:
     def show(self) -> None:
         produtos = self._repo.todos()
         async def _render_async():
-            self._render(produtos)
+            try:
+                self._render(produtos)
+            except Exception as ex:
+                self._ctrl.notify(f"Erro ao renderizar estoque: {ex}", ok=False)
         self._ctrl.page.run_task(_render_async)
 
     def _render(self, produtos: list) -> None:
