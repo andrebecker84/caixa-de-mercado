@@ -63,7 +63,7 @@ def main(page: ft.Page) -> None:
     _logo_container = ft.Container(
         content=_logo_img,
         width=54, height=54,
-        border_radius=ft.border_radius.all(14),
+        border_radius=14,
         bgcolor=ft.Colors.with_opacity(0.12, th.primary(page)),
         alignment=ft.Alignment(0, 0),
         margin=ft.margin.only(bottom=32),
@@ -116,7 +116,7 @@ def main(page: ft.Page) -> None:
     _op_avatar   = ft.Container(
         _op_avatar_icon,
         bgcolor=th.muted(page),
-        border_radius=ft.border_radius.all(50),
+        border_radius=50,
         width=36, height=36,
         alignment=ft.Alignment(0, 0),
     )
@@ -159,7 +159,7 @@ def main(page: ft.Page) -> None:
     _bell_badge = ft.Container(
         content=_bell_badge_text,
         bgcolor=th.DARK_PRIMARY,
-        border_radius=ft.border_radius.all(8),
+        border_radius=8,
         width=16, height=16,
         alignment=ft.Alignment(0, 0),
         visible=False,
@@ -735,7 +735,7 @@ def main(page: ft.Page) -> None:
                 ft.Container(
                     ft.Icon(ft.Icons.SHOPPING_CART, size=16, color=ft.Colors.WHITE),
                     bgcolor=color,
-                    border_radius=ft.border_radius.all(8),
+                    border_radius=8,
                     width=34, height=34, alignment=ft.Alignment(0, 0),
                 ),
                 ft.Column([

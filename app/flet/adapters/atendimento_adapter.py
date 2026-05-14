@@ -173,7 +173,7 @@ class AtendimentoFletAdapter(AtendimentoPort):
                 ft.Container(
                     ft.Icon(ft.Icons.RECEIPT_LONG, size=16, color=ft.Colors.WHITE),
                     bgcolor=th.primary(page),
-                    border_radius=ft.border_radius.all(8),
+                    border_radius=8,
                     width=34, height=34, alignment=ft.Alignment(0, 0),
                 ),
                 ft.Column([
@@ -291,7 +291,7 @@ class AtendimentoFletAdapter(AtendimentoPort):
                 self._code_section,
             ], spacing=10),
             bgcolor=th.card(page),
-            border_radius=ft.border_radius.all(th.RADIUS_CARD),
+            border_radius=th.RADIUS_CARD,
             shadow=th.card_shadows(th.is_dark(page)),
             padding=18,
         )
@@ -324,7 +324,7 @@ class AtendimentoFletAdapter(AtendimentoPort):
                 color=ft.Colors.WHITE, text_align=ft.TextAlign.CENTER,
             ),
             bgcolor=color if not esgotado else th.muted(page),
-            border_radius=ft.border_radius.all(50),
+            border_radius=50,
             width=40, height=40,
             alignment=ft.Alignment(0, 0),
             shadow=[ft.BoxShadow(
@@ -421,7 +421,7 @@ class AtendimentoFletAdapter(AtendimentoPort):
                     ),
                 ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=3),
                 bgcolor=ft.Colors.with_opacity(0.3, th.card(page)),
-                border_radius=ft.border_radius.all(th.RADIUS_CARD),
+                border_radius=th.RADIUS_CARD,
                 border=ft.border.all(1, th.border(page)),
                 padding=ft.padding.all(10),
             ),
@@ -647,7 +647,7 @@ class AtendimentoFletAdapter(AtendimentoPort):
                     ft.Text(_initials(produto.nome), size=14,
                             weight=ft.FontWeight.BOLD, color=ft.Colors.WHITE,
                             text_align=ft.TextAlign.CENTER),
-                    bgcolor=color, border_radius=ft.border_radius.all(50),
+                    bgcolor=color, border_radius=50,
                     width=36, height=36, alignment=ft.Alignment(0, 0),
                 ),
                 ft.Column([

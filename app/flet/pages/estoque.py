@@ -175,7 +175,7 @@ class EstoquePage:
                                         color=ft.Colors.WHITE,
                                         text_align=ft.TextAlign.CENTER),
                                 bgcolor=avatar_bg,
-                                border_radius=ft.border_radius.all(50),
+                                border_radius=50,
                                 width=38, height=38,
                                 alignment=ft.Alignment(0, 0),
                             ),
@@ -205,7 +205,7 @@ class EstoquePage:
                         ], spacing=12,
                            vertical_alignment=ft.CrossAxisAlignment.CENTER),
                         bgcolor=th.card(page),
-                        border_radius=ft.border_radius.all(10),
+                        border_radius=10,
                         border=ft.border.all(
                             1,
                             ft.Colors.with_opacity(0.35, th.danger(page)) if critico or esgotado
@@ -312,7 +312,7 @@ class EstoquePage:
                     ft.Text(label, size=11, color=th.muted(page)),
                 ], spacing=2, tight=True),
                 bgcolor=th.card(page),
-                border_radius=ft.border_radius.all(th.RADIUS_CARD),
+                border_radius=th.RADIUS_CARD,
                 shadow=th.card_shadows(th.is_dark(page)),
                 padding=ft.padding.all(16),
                 expand=True,

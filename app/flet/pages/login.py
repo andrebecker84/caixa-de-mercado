@@ -75,7 +75,7 @@ class LoginPage:
                 ft.Container(
                     ft.Text(op.iniciais, size=18, weight=ft.FontWeight.BOLD, color=ft.Colors.WHITE),
                     bgcolor=op.cor,
-                    border_radius=ft.border_radius.all(40),
+                    border_radius=40,
                     width=70,
                     height=70,
                     alignment=ft.Alignment(0, 0),
@@ -103,7 +103,7 @@ class LoginPage:
                 ),
             ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=0),
             bgcolor=th.card(page),
-            border_radius=ft.border_radius.all(th.RADIUS_CARD),
+            border_radius=th.RADIUS_CARD,
             border=ft.border.all(1, ft.Colors.with_opacity(0.1, th.text(page))),
             shadow=th.card_shadows(th.is_dark(page)),
             padding=ft.padding.all(24),

@@ -58,7 +58,7 @@ class PageController:
         return ft.Container(
             content=content,
             bgcolor=th.card(self._page),
-            border_radius=ft.border_radius.all(th.RADIUS_CARD),
+            border_radius=th.RADIUS_CARD,
             shadow=th.card_shadows(th.is_dark(self._page)),
             padding=padding,
         )
