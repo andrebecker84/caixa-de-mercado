@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: caixa-mercado
+  labels:
+    app: mysql
+    projeto: caixa-mercado
+spec:
+  selector:
+    app: mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
+      protocol: TCP
+      name: mysql
+  # ClusterIP: acessível apenas dentro do cluster
+  # Para acesso externo local, use: kubectl port-forward svc/mysql 3306:3306 -n caixa-mercado
+  type: ClusterIP

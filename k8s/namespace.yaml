@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: caixa-mercado
+  labels:
+    projeto: caixa-mercado
+
+# ──────────────────────────────────────────────────────────────
+# Comandos de referência — executar manualmente
+# ──────────────────────────────────────────────────────────────
+#
+# 1. Criar namespace e aplicar todos os manifestos:
+#    kubectl apply -f k8s/namespace.yaml
+#    kubectl apply -f k8s/ -n caixa-mercado
+#
+# 2. Aguardar MySQL estar pronto:
+#    kubectl rollout status statefulset/mysql -n caixa-mercado
+#
+# 3. Expor MySQL localmente (para conectar o app via Docker):
+#    kubectl port-forward svc/mysql 3306:3306 -n caixa-mercado
+#
+# 4. Executar o app CLI contra o MySQL do K8s:
+#    # Com port-forward ativo, ajustar .env: DB_HOST=localhost
+#    docker compose run --rm app
+#
+# 5. Rodar testes contra o MySQL do K8s:
+#    docker compose run --rm test
+#
+# 6. Inspecionar o banco via kubectl:
+#    kubectl exec -it statefulset/mysql -n caixa-mercado -- \
+#      mysql -u mercado_user -p mercado_at
+#
+# Nota sobre K8s e CLI interativa:
+# K8s é projetado para serviços de longa duração (web APIs, workers).
+# Apps CLI com input() interativo são executadas via Docker localmente;
+# o K8s gerencia apenas o MySQL como StatefulSet com dados persistentes.
+# Se o projeto evoluir para uma API REST, aí faz sentido um Deployment
+# do app no K8s também.
+# ──────────────────────────────────────────────────────────────

@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flet
+  namespace: caixa-mercado
+  labels:
+    app: flet
+    projeto: caixa-mercado
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flet
+  template:
+    metadata:
+      labels:
+        app: flet
+    spec:
+      containers:
+        - name: flet
+          image: caixamercado/flet:latest
+          ports:
+            - containerPort: 8550
+              name: web
+          env:
+            - name: DB_HOST
+              value: mysql.caixa-mercado.svc.cluster.local
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: password
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: database
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8550
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8550
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 3
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flet
+  namespace: caixa-mercado
+  labels:
+    app: flet
+    projeto: caixa-mercado
+spec:
+  selector:
+    app: flet
+  ports:
+    - port: 80
+      targetPort: 8550
+      protocol: TCP
+      name: web
+  # LoadBalancer: expõe externamente via IP do cloud provider
+  # Para uso local: kubectl port-forward svc/flet 8550:80 -n caixa-mercado
+  type: LoadBalancer

@@ -1,0 +1,15 @@
+# ── Produção ──────────────────────────────────────────────────
+sqlalchemy
+pymysql
+cryptography
+python-dotenv
+tqdm
+tabulate
+flet
+
+# ── Desenvolvimento e testes ───────────────────────────────────
+pytest
+pytest-cov
+hypothesis
+playwright
+pytest-playwright

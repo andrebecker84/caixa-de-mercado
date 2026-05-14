@@ -1,0 +1,33 @@
+# Claude Code
+CLAUDE.md
+CLAUDE.local.md
+.claude/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# Testing
+htmlcov/
+.coverage
+.pytest_cache/
+
+# Environment
+.env
+*.log
+
+# Docker / infra
+.dockerignore
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,158 @@
+# caixaMercado — orquestração de serviços
+# Camadas isoladas: database | backend (flet) | test | playwright
+#
+# Comandos:
+#   docker compose up db flet -d           # sobe banco + frontend
+#   docker compose run --rm app             # CLI interativo
+#   docker compose --profile test run test  # testes unitários
+#   docker compose --profile e2e run pw     # testes playwright
+
+services:
+
+  # ── Database ────────────────────────────────────────────────
+  db:
+    image: mysql:8.4.8
+    container_name: caixa_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ../database/data/criar_banco.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ../database/data/seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
+      - ../database/seeds:/docker-entrypoint-initdb.d/csv:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 8
+      start_period: 30s
+    networks:
+      - db_net
+
+  # ── Frontend Flet (web) ─────────────────────────────────────
+  flet:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: flet
+    container_name: caixa_flet
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8550:8550"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+    volumes:
+      - flet_assets:/app/assets:ro
+    networks:
+      - db_net
+      - web_net
+
+  # ── CLI interativo ──────────────────────────────────────────
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: app
+    container_name: caixa_cli
+    stdin_open: true
+    tty: true
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+    networks:
+      - db_net
+    profiles:
+      - cli
+
+  # ── Testes unitários ────────────────────────────────────────
+  test:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: test
+    container_name: caixa_test
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}_test
+    volumes:
+      - test_cov:/app/htmlcov
+    networks:
+      - db_net
+    profiles:
+      - test
+
+  # ── Playwright e2e ──────────────────────────────────────────
+  pw:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: playwright
+    container_name: caixa_playwright
+    depends_on:
+      - flet
+    environment:
+      FLET_URL: http://flet:8550
+    volumes:
+      - pw_results:/app/tests/screenshots
+    networks:
+      - web_net
+    profiles:
+      - e2e
+
+  # ── Adminer (dev) ───────────────────────────────────────────
+  adminer:
+    image: adminer:4
+    container_name: caixa_adminer
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8081:8080"
+    networks:
+      - db_net
+      - web_net
+    profiles:
+      - dev
+
+networks:
+  db_net:
+    driver: bridge
+    internal: false
+  web_net:
+    driver: bridge
+
+volumes:
+  db_data:
+    driver: local
+  flet_assets:
+    driver: local
+  test_cov:
+    driver: local
+  pw_results:
+    driver: local
