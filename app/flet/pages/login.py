@@ -45,7 +45,7 @@ class LoginPage:
             content=ft.Column([
                 ft.Container(
                     content=ft.Image(src="/logo.svg", width=140, height=76, fit="contain"),
-                    margin=ft.margin.only(bottom=10),
+                    margin=ft.Margin(bottom=10),
                 ),
                 ft.Text(
                     "CAIXA MERCADO",
@@ -64,7 +64,7 @@ class LoginPage:
                 ),
             ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=0),
             bgcolor=ft.Colors.TRANSPARENT,
-            padding=ft.padding.symmetric(horizontal=48, vertical=20),
+            padding=ft.Padding(left=48, top=20, right=48, bottom=20),
             width=520,
         )
 
@@ -104,9 +104,9 @@ class LoginPage:
             ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=0),
             bgcolor=th.card(page),
             border_radius=th.RADIUS_CARD,
-            border=ft.border.all(1, ft.Colors.with_opacity(0.1, th.text(page))),
+            border=ft.Border.all(1, ft.Colors.with_opacity(0.1, th.text(page))),
             shadow=th.card_shadows(th.is_dark(page)),
-            padding=ft.padding.all(24),
+            padding=ft.Padding(left=24, top=24, right=24, bottom=24),
             width=130,
             alignment=ft.Alignment(0, 0),
             ink=True,

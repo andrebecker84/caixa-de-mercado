@@ -90,7 +90,7 @@ class RelatoriosPage:
                 bgcolor=th.card(page),
                 border_radius=th.RADIUS_CARD,
                 shadow=th.card_shadows(th.is_dark(page)),
-                padding=ft.padding.all(16),
+                padding=ft.Padding(left=16, top=16, right=16, bottom=16),
                 expand=True,
             )
 
@@ -180,14 +180,14 @@ class RelatoriosPage:
                     ], horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                        spacing=1, tight=True),
                     expand=True,
-                    border=ft.border.all(
+                    border=ft.Border.all(
                         1.5 if is_hoje else 1,
                         th.primary(page) if is_hoje
                         else (ft.Colors.with_opacity(0.25, th.success(page)) if vendas
                               else th.border(page)),
                     ),
                     border_radius=6,
-                    padding=ft.padding.symmetric(horizontal=2, vertical=5),
+                    padding=ft.Padding(left=2, top=5, right=2, bottom=5),
                     bgcolor=(
                         ft.Colors.with_opacity(0.10, th.primary(page)) if is_hoje
                         else ft.Colors.with_opacity(0.04, th.success(page)) if vendas
@@ -252,10 +252,10 @@ class RelatoriosPage:
                                     color=cor, weight=ft.FontWeight.BOLD),
                         ], spacing=10, vertical_alignment=ft.CrossAxisAlignment.CENTER),
                         bgcolor=ft.Colors.with_opacity(0.04, cor),
-                        border=ft.border.all(1, ft.Colors.with_opacity(0.18, cor)),
+                        border=ft.Border.all(1, ft.Colors.with_opacity(0.18, cor)),
                         border_radius=10,
-                        padding=ft.padding.symmetric(horizontal=12, vertical=8),
-                        margin=ft.margin.only(bottom=6),
+                        padding=ft.Padding(left=12, top=8, right=12, bottom=8),
+                        margin=ft.Margin(bottom=6),
                     )
                 )
             detail_body = ft.Column(op_rows, spacing=0)
@@ -283,7 +283,7 @@ class RelatoriosPage:
             content=ft.Container(
                 content=detail_body,
                 width=380,
-                padding=ft.padding.symmetric(vertical=4),
+                padding=ft.Padding(left=0, top=4, right=0, bottom=4),
             ),
             actions=[
                 ft.TextButton(
@@ -322,8 +322,7 @@ class RelatoriosPage:
                                     color=ft.Colors.WHITE,
                                     weight=ft.FontWeight.BOLD),
                             bgcolor=color, border_radius=4,
-                            padding=ft.padding.symmetric(
-                                horizontal=5, vertical=2),
+                            padding=ft.Padding(left=5, top=2, right=5, bottom=2),
                             width=22,
                             alignment=ft.Alignment(0, 0),
                         ),

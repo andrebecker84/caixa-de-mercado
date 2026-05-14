@@ -127,15 +127,15 @@ class DashboardPage:
                         ft.Text("SISTEMA ONLINE", size=10, weight=ft.FontWeight.BOLD,
                                 color=ft.Colors.AMBER),
                     ], spacing=4),
-                    padding=ft.padding.symmetric(horizontal=12, vertical=6),
+                    padding=ft.Padding(left=12, top=6, right=12, bottom=6),
                     border_radius=20,
                     bgcolor=ft.Colors.with_opacity(0.1, ft.Colors.AMBER),
                 )
             ], vertical_alignment=ft.CrossAxisAlignment.CENTER),
             bgcolor=th.DARK_SURFACE if dark else th.LIGHT_PRIMARY,
             border_radius=th.RADIUS_CARD,
-            padding=ft.padding.symmetric(horizontal=30, vertical=30),
-            border=ft.border.all(1, ft.Colors.with_opacity(0.1, ft.Colors.WHITE) if dark else None),
+            padding=ft.Padding(left=30, top=30, right=30, bottom=30),
+            border=ft.Border.all(1, ft.Colors.with_opacity(0.1, ft.Colors.WHITE) if dark else None),
         )
 
     # ── Stat cards ────────────────────────────────────────────────
@@ -160,7 +160,7 @@ class DashboardPage:
             bgcolor=th.card(page),
             border_radius=th.RADIUS_CARD,
             shadow=th.card_shadows(th.is_dark(page)),
-            padding=ft.padding.all(18),
+            padding=ft.Padding(left=18, top=18, right=18, bottom=18),
             expand=True,
         )
 
@@ -217,7 +217,7 @@ class DashboardPage:
                         height=bar_h,
                         bgcolor=color_ok if not is_max
                                 else ft.Colors.with_opacity(1.0, th.success(page)),
-                        border_radius=ft.border_radius.only(top_left=5, top_right=5),
+                        border_radius=ft.BorderRadius(top_left=5, top_right=5, bottom_left=0, bottom_right=0),
                         tooltip=f"{weekday} · R$ {val:,.2f}",
                         shadow=[ft.BoxShadow(
                             blur_radius=8,
@@ -478,10 +478,10 @@ class DashboardPage:
                 ft.Text(subtitle, size=11, color=th.muted(page)),
             ], spacing=0, horizontal_alignment=ft.CrossAxisAlignment.START),
             bgcolor=th.card(page),
-            border=ft.border.all(1, ft.Colors.with_opacity(0.25, color)),
+            border=ft.Border.all(1, ft.Colors.with_opacity(0.25, color)),
             border_radius=th.RADIUS_CARD,
             shadow=th.card_shadows(th.is_dark(page)),
-            padding=ft.padding.symmetric(horizontal=20, vertical=18),
+            padding=ft.Padding(left=20, top=18, right=20, bottom=18),
             width=210,
             ink=True,
             ink_color=ft.Colors.with_opacity(0.07, color),

@@ -211,10 +211,11 @@ Dois arquivos compose independentes foram consolidados em um único `docker-comp
 
 | Profile | Serviços ativos | Comando |
 |---|---|---|
-| *(nenhum)* | `db` + `flet` | `docker compose -f docker/docker-compose.yml up --build` |
-| `cli` | + `app` (terminal interativo) | `docker compose -f docker/docker-compose.yml --profile cli run --rm app` |
-| `test` | + `test` (pytest + cobertura) | `docker compose -f docker/docker-compose.yml --profile test run --rm test` |
-| `dev` | + `adminer` | `docker compose -f docker/docker-compose.yml --profile dev up` |
+| *(nenhum)* | `db` + `flet` | `docker compose -f docker/docker-compose.yml --env-file .env up --build` |
+| `cli` | + `app` (terminal interativo) | `docker compose -f docker/docker-compose.yml --env-file .env --profile cli run --rm app` |
+| `test` | + `test` (pytest + cobertura) | `docker compose -f docker/docker-compose.yml --env-file .env --profile test run --rm test` |
+| `e2e` | + `pw` (Playwright E2E) | `docker compose -f docker/docker-compose.yml --env-file .env --profile e2e run --rm pw` |
+| `dev` | + `adminer` | `docker compose -f docker/docker-compose.yml --env-file .env --profile dev up` |
 
 ---
 
@@ -235,7 +236,7 @@ chmod +x run.sh && ./run.sh
 cp .env.example .env
 
 # 2. Sobe banco + interface Flet
-docker compose -f docker/docker-compose.yml up --build
+docker compose -f docker/docker-compose.yml --env-file .env up --build
 
 # 3. Acessa no browser
 # http://localhost:8550
@@ -244,14 +245,18 @@ docker compose -f docker/docker-compose.yml up --build
 ### CLI Terminal (Docker)
 
 ```bash
-docker compose -f docker/docker-compose.yml --profile cli run --rm app
+docker compose -f docker/docker-compose.yml --env-file .env --profile cli run --rm app
 ```
 
 ### Testes
 
 ```bash
-# Via Docker
-docker compose -f docker/docker-compose.yml --profile test run --rm test
+# Unitários + property-based (pytest + hypothesis) via Docker
+docker compose -f docker/docker-compose.yml --env-file .env --profile test run --rm test
+
+# E2E com Playwright via Docker (requer flet rodando)
+docker compose -f docker/docker-compose.yml --env-file .env up -d flet
+docker compose -f docker/docker-compose.yml --env-file .env --profile e2e run --rm pw
 
 # Local com cobertura HTML
 pytest --cov=app --cov-report=html tests/
@@ -260,7 +265,7 @@ pytest --cov=app --cov-report=html tests/
 ### Inspecionar banco (opcional)
 
 ```bash
-docker compose -f docker/docker-compose.yml --profile dev up adminer
+docker compose -f docker/docker-compose.yml --env-file .env --profile dev up adminer
 # http://localhost:8081  (Server: db | User: mercado_user)
 ```
 

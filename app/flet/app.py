@@ -66,7 +66,7 @@ def main(page: ft.Page) -> None:
         border_radius=14,
         bgcolor=ft.Colors.with_opacity(0.12, th.primary(page)),
         alignment=ft.Alignment(0, 0),
-        margin=ft.margin.only(bottom=32),
+        margin=ft.Margin(bottom=32),
     )
 
     def _make_nav_btn(icon: str, label: str, on_click, active: bool = False) -> ft.Container:
@@ -75,7 +75,7 @@ def main(page: ft.Page) -> None:
         _nav_icons.append(ico)
         return ft.Container(
             content=ico,
-            padding=ft.padding.all(12),
+            padding=ft.Padding(left=12, top=12, right=12, bottom=12),
             border_radius=16,
             ink=True,
             on_click=on_click,
@@ -107,7 +107,7 @@ def main(page: ft.Page) -> None:
         ], spacing=0, horizontal_alignment=ft.CrossAxisAlignment.CENTER),
         width=80, # Slim sidebar like in the image
         bgcolor=th.surface(page),
-        padding=ft.padding.only(top=30, bottom=20),
+        padding=ft.Padding(top=30, bottom=20),
     )
 
     # ── Top navbar ────────────────────────────────────────────────
@@ -188,7 +188,7 @@ def main(page: ft.Page) -> None:
         ], spacing=10),
         bgcolor=ft.Colors.with_opacity(0.05, th.text(page)),
         border_radius=30,
-        padding=ft.padding.symmetric(horizontal=20),
+        padding=ft.Padding(left=20, top=0, right=20, bottom=0),
         width=400,
         height=45,
     )
@@ -215,7 +215,7 @@ def main(page: ft.Page) -> None:
             ),
         ], vertical_alignment=ft.CrossAxisAlignment.CENTER),
         bgcolor=ft.Colors.TRANSPARENT,
-        padding=ft.padding.symmetric(horizontal=30, vertical=15),
+        padding=ft.Padding(left=30, top=15, right=30, bottom=15),
         height=80,
     )
 
@@ -249,8 +249,8 @@ def main(page: ft.Page) -> None:
             ], spacing=4),
         ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
         bgcolor=th.surface(page),
-        border=ft.border.only(top=ft.BorderSide(1, th.border(page))),
-        padding=ft.padding.symmetric(horizontal=20, vertical=7),
+        border=ft.Border(top=ft.BorderSide(1, th.border(page))),
+        padding=ft.Padding(left=20, top=7, right=20, bottom=7),
     )
 
     # ── Theme toggle ──────────────────────────────────────────────
@@ -266,7 +266,7 @@ def main(page: ft.Page) -> None:
         sidebar.bgcolor  = th.surface(page)
         navbar.bgcolor   = ft.Colors.TRANSPARENT
         footer.bgcolor   = th.surface(page)
-        footer.border    = ft.border.only(top=ft.BorderSide(1, th.border(page)))
+        footer.border    = ft.Border(top=ft.BorderSide(1, th.border(page)))
 
         _op_nome.color    = th.text(page)
         _op_cargo.color   = th.muted(page)
@@ -369,7 +369,7 @@ def main(page: ft.Page) -> None:
                                 size=13, color=th.muted(page)),
                     ], horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                        spacing=8),
-                    padding=ft.padding.all(20),
+                    padding=ft.Padding(left=20, top=20, right=20, bottom=20),
                     width=400,
                 ),
                 actions=[
@@ -400,7 +400,7 @@ def main(page: ft.Page) -> None:
                         no_wrap=False,
                     ),
                 ], spacing=4, tight=True),
-                padding=ft.padding.symmetric(horizontal=10, vertical=8),
+                padding=ft.Padding(left=10, top=8, right=10, bottom=8),
                 border_radius=6,
                 bgcolor=ft.Colors.with_opacity(
                     0.06, th.success(page) if n['ok'] else th.danger(page)
@@ -421,7 +421,7 @@ def main(page: ft.Page) -> None:
                 ft.Column(rows, spacing=6, scroll=ft.ScrollMode.ADAPTIVE),
                 height=460,
                 width=540,
-                padding=ft.padding.only(top=4, bottom=4),
+                padding=ft.Padding(top=4, bottom=4),
             ),
             actions=[
                 ft.TextButton("Fechar", on_click=lambda e: ctrl.close_dialog(),
@@ -563,7 +563,7 @@ def main(page: ft.Page) -> None:
                     ft.Text("Um relatório do dia será gerado antes do encerramento.",
                             size=12, color=th.muted(page)),
                 ], spacing=6, tight=True, width=340),
-                padding=ft.padding.only(top=4, bottom=4),
+                padding=ft.Padding(top=4, bottom=4),
             ),
             actions=[
                 ft.TextButton("Cancelar", on_click=_no,
@@ -576,7 +576,7 @@ def main(page: ft.Page) -> None:
                         bgcolor="#FF6B6B",
                         color=ft.Colors.WHITE,
                         shape=ft.RoundedRectangleBorder(radius=th.RADIUS_BTN),
-                        padding=ft.padding.symmetric(horizontal=20, vertical=12),
+                        padding=ft.Padding(left=20, top=12, right=20, bottom=12),
                     ),
                 ),
             ],
@@ -607,7 +607,7 @@ def main(page: ft.Page) -> None:
                                 weight=ft.FontWeight.BOLD,
                                 text_align=ft.TextAlign.CENTER),
                         bgcolor=cor, border_radius=4,
-                        padding=ft.padding.symmetric(horizontal=5, vertical=2),
+                        padding=ft.Padding(left=5, top=2, right=5, bottom=2),
                         width=36, alignment=ft.Alignment(0, 0),
                     ),
                     ft.Text(c.nome, size=12, color=th.text(page), expand=True),
@@ -616,8 +616,8 @@ def main(page: ft.Page) -> None:
                 ], spacing=8, vertical_alignment=ft.CrossAxisAlignment.CENTER),
                 bgcolor=th.card(page),
                 border_radius=8,
-                padding=ft.padding.symmetric(horizontal=12, vertical=8),
-                border=ft.border.all(1, th.border(page)),
+                padding=ft.Padding(left=12, top=8, right=12, bottom=8),
+                border=ft.Border.all(1, th.border(page)),
                 on_click=lambda e, cl=c: _select(cl),
                 ink=True,
                 ink_color=ft.Colors.with_opacity(0.07, color),
@@ -652,8 +652,8 @@ def main(page: ft.Page) -> None:
                     ], spacing=8, vertical_alignment=ft.CrossAxisAlignment.CENTER),
                     bgcolor=ft.Colors.with_opacity(0.06, color),
                     border_radius=8,
-                    padding=ft.padding.symmetric(horizontal=12, vertical=8),
-                    border=ft.border.all(1, ft.Colors.with_opacity(0.3, color)),
+                    padding=ft.Padding(left=12, top=8, right=12, bottom=8),
+                    border=ft.Border.all(1, ft.Colors.with_opacity(0.3, color)),
                     on_click=lambda e: _create(nome_query),
                     ink=True,
                 ))
@@ -661,7 +661,7 @@ def main(page: ft.Page) -> None:
                 ft.Container(
                     ft.Text("Nenhum cliente encontrado.", size=12,
                             color=th.muted(page)),
-                    padding=ft.padding.all(16),
+                    padding=ft.Padding(left=16, top=16, right=16, bottom=16),
                 )
             ]
             page.update()
@@ -725,7 +725,7 @@ def main(page: ft.Page) -> None:
                     ft.Text("Carregando clientes...", size=12,
                             color=th.muted(page)),
                 ], spacing=8),
-                padding=ft.padding.all(16),
+                padding=ft.Padding(left=16, top=16, right=16, bottom=16),
             )
         ]
 
@@ -750,7 +750,7 @@ def main(page: ft.Page) -> None:
                     [search_tf, ft.Container(height=4), list_col],
                     spacing=0, tight=True, width=420,
                 ),
-                padding=ft.padding.only(top=4, bottom=4),
+                padding=ft.Padding(top=4, bottom=4),
             ),
             actions=[
                 ft.TextButton(
@@ -820,7 +820,7 @@ def main(page: ft.Page) -> None:
             ft.Container(
                 content=body, 
                 expand=True,
-                padding=ft.padding.only(left=30, right=30, top=10, bottom=30),
+                padding=ft.Padding(left=30, right=30, top=10, bottom=30),
             ),
         ], spacing=0, expand=True),
         expand=True,

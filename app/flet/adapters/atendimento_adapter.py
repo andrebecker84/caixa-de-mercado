@@ -185,7 +185,7 @@ class AtendimentoFletAdapter(AtendimentoPort):
             ], spacing=10),
             content=ft.Container(
                 content=content,
-                padding=ft.padding.only(top=4, bottom=4),
+                padding=ft.Padding(top=4, bottom=4),
             ),
             actions=[
                 ft.TextButton(
@@ -200,7 +200,7 @@ class AtendimentoFletAdapter(AtendimentoPort):
                         color=th.primary(page),
                         side=ft.BorderSide(color=th.primary(page), width=1),
                         shape=ft.RoundedRectangleBorder(radius=th.RADIUS_BTN),
-                        padding=ft.padding.symmetric(horizontal=14, vertical=10),
+                        padding=ft.Padding(left=14, top=10, right=14, bottom=10),
                     ),
                 ),
                 self._ctrl.make_primary_btn(
@@ -340,7 +340,7 @@ class AtendimentoFletAdapter(AtendimentoPort):
                     text_align=ft.TextAlign.CENTER),
             bgcolor=color if not esgotado else th.muted(page),
             border_radius=3,
-            padding=ft.padding.symmetric(horizontal=4, vertical=1),
+            padding=ft.Padding(left=4, top=1, right=4, bottom=1),
         )
 
         stock_badge = ft.Container(
@@ -351,7 +351,7 @@ class AtendimentoFletAdapter(AtendimentoPort):
             ),
             bgcolor=stock_color,
             border_radius=4,
-            padding=ft.padding.symmetric(horizontal=5, vertical=2),
+            padding=ft.Padding(left=5, top=2, right=5, bottom=2),
             tooltip=f"{disp} unidades disponíveis" if not esgotado else "Esgotado",
         )
 
@@ -398,9 +398,9 @@ class AtendimentoFletAdapter(AtendimentoPort):
             ], spacing=2, tight=True),
             bgcolor=th.card(page),
             border_radius=th.RADIUS_CARD,
-            padding=ft.padding.all(12),
+            padding=ft.Padding(left=12, top=12, right=12, bottom=12),
             opacity=0.5 if esgotado else 1.0,
-            border=ft.border.all(1, ft.Colors.with_opacity(0.1, th.text(page))),
+            border=ft.Border.all(1, ft.Colors.with_opacity(0.1, th.text(page))),
         )
 
         if esgotado:
@@ -422,8 +422,8 @@ class AtendimentoFletAdapter(AtendimentoPort):
                 ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=3),
                 bgcolor=ft.Colors.with_opacity(0.3, th.card(page)),
                 border_radius=th.RADIUS_CARD,
-                border=ft.border.all(1, th.border(page)),
-                padding=ft.padding.all(10),
+                border=ft.Border.all(1, th.border(page)),
+                padding=ft.Padding(left=10, top=10, right=10, bottom=10),
             ),
             content_feedback=ft.Container(
                 content=ft.Row([
@@ -436,7 +436,7 @@ class AtendimentoFletAdapter(AtendimentoPort):
                 ], spacing=6, tight=True),
                 bgcolor=primary,
                 border_radius=8,
-                padding=ft.padding.symmetric(horizontal=12, vertical=8),
+                padding=ft.Padding(left=12, top=8, right=12, bottom=8),
                 shadow=[ft.BoxShadow(
                     blur_radius=14,
                     color=ft.Colors.with_opacity(0.35, ft.Colors.BLACK),
@@ -476,7 +476,7 @@ class AtendimentoFletAdapter(AtendimentoPort):
                 bgcolor=th.primary(page),
                 color=ft.Colors.WHITE,
                 shape=ft.RoundedRectangleBorder(radius=th.RADIUS_BTN),
-                padding=ft.padding.symmetric(horizontal=24, vertical=14),
+                padding=ft.Padding(left=24, top=14, right=24, bottom=14),
             ),
         )
 
@@ -498,7 +498,7 @@ class AtendimentoFletAdapter(AtendimentoPort):
                         ft.Container(height=10),
                         finalizar_btn,
                     ]),
-                    padding=ft.padding.all(20),
+                    padding=ft.Padding(left=20, top=20, right=20, bottom=20),
                     bgcolor=ft.Colors.with_opacity(0.05, th.text(page)),
                     border_radius=th.RADIUS_CARD,
                 ),
@@ -681,8 +681,7 @@ class AtendimentoFletAdapter(AtendimentoPort):
                                horizontal_alignment=ft.CrossAxisAlignment.CENTER),
                             bgcolor=stock_badge_color,
                             border_radius=10,
-                            padding=ft.padding.symmetric(horizontal=14,
-                                                         vertical=10),
+                            padding=ft.Padding(left=14, top=10, right=14, bottom=10),
                             shadow=[ft.BoxShadow(
                                 blur_radius=8,
                                 color=ft.Colors.with_opacity(
@@ -720,10 +719,10 @@ class AtendimentoFletAdapter(AtendimentoPort):
                         content=subtotal_lbl,
                         bgcolor=ft.Colors.with_opacity(0.06, th.success(page)),
                         border_radius=8,
-                        padding=ft.padding.symmetric(horizontal=14, vertical=8),
+                        padding=ft.Padding(left=14, top=8, right=14, bottom=8),
                     ),
                 ], spacing=14, tight=True, width=340),
-                padding=ft.padding.only(top=4, bottom=4),
+                padding=ft.Padding(top=4, bottom=4),
             ),
             actions=[
                 ft.TextButton(
@@ -819,7 +818,7 @@ class AtendimentoFletAdapter(AtendimentoPort):
                                 weight=ft.FontWeight.BOLD,
                                 text_align=ft.TextAlign.CENTER),
                         bgcolor=color, border_radius=4,
-                        padding=ft.padding.symmetric(horizontal=4, vertical=2),
+                        padding=ft.Padding(left=4, top=2, right=4, bottom=2),
                         width=20, alignment=ft.Alignment(0, 0),
                     ),
                     ft.Text(item.nome, size=12, color=th.text(page),
@@ -843,8 +842,8 @@ class AtendimentoFletAdapter(AtendimentoPort):
                    vertical_alignment=ft.CrossAxisAlignment.CENTER),
                 bgcolor=ft.Colors.with_opacity(0.05, th.primary(page)),
                 border_radius=6,
-                padding=ft.padding.symmetric(horizontal=8, vertical=5),
-                margin=ft.margin.only(bottom=3),
+                padding=ft.Padding(left=8, top=5, right=8, bottom=5),
+                margin=ft.Margin(bottom=3),
             ))
 
         rows.append(ft.Container(
@@ -874,7 +873,7 @@ class AtendimentoFletAdapter(AtendimentoPort):
                 ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                    vertical_alignment=ft.CrossAxisAlignment.END),
             ], spacing=0),
-            padding=ft.padding.only(top=6),
+            padding=ft.Padding(top=6),
         ))
 
         self._cart_ref.controls = rows

@@ -76,10 +76,10 @@ class EstoquePage:
                             color=ft.Colors.WHITE if ativo else th.text(page),
                         ),
                         bgcolor=cor if ativo else ft.Colors.with_opacity(0.06, cor),
-                        border=ft.border.all(1, cor if ativo
+                        border=ft.Border.all(1, cor if ativo
                                              else ft.Colors.with_opacity(0.3, cor)),
                         border_radius=20,
-                        padding=ft.padding.symmetric(horizontal=14, vertical=6),
+                        padding=ft.Padding(left=14, top=6, right=14, bottom=6),
                         ink=True,
                         ink_color=ft.Colors.with_opacity(0.08, cor),
                         on_click=lambda e, fil=f: _aplicar_filtro(fil),
@@ -107,7 +107,7 @@ class EstoquePage:
                                 color=th.muted(page)),
                     ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=10),
                     alignment=ft.Alignment(0, 0),
-                    padding=ft.padding.symmetric(vertical=24),
+                    padding=ft.Padding(left=0, top=24, right=0, bottom=24),
                 )]
 
             rows = []
@@ -141,7 +141,7 @@ class EstoquePage:
                                         color=ft.Colors.WHITE),
                         bgcolor=th.danger(page),
                         border_radius=4,
-                        padding=ft.padding.symmetric(horizontal=5, vertical=2),
+                        padding=ft.Padding(left=5, top=2, right=5, bottom=2),
                         animate_opacity=ft.Animation(800, ft.AnimationCurve.EASE_IN_OUT),
                         opacity=1.0,
                     )
@@ -153,7 +153,7 @@ class EstoquePage:
                             text_align=ft.TextAlign.CENTER),
                     bgcolor=status_color,
                     border_radius=6,
-                    padding=ft.padding.symmetric(horizontal=10, vertical=4),
+                    padding=ft.Padding(left=10, top=4, right=10, bottom=4),
                     width=52,
                     alignment=ft.Alignment(0, 0),
                 )
@@ -185,7 +185,7 @@ class EstoquePage:
                                         weight=ft.FontWeight.BOLD),
                                 bgcolor=avatar_bg,
                                 border_radius=4,
-                                padding=ft.padding.symmetric(horizontal=6, vertical=2),
+                                padding=ft.Padding(left=6, top=2, right=6, bottom=2),
                                 width=38,
                             ),
                             name_col,
@@ -197,24 +197,24 @@ class EstoquePage:
                                 ft.Text(status_label, size=10,
                                         color=status_color,
                                         weight=ft.FontWeight.W_600),
-                                border=ft.border.all(1, status_color),
+                                border=ft.Border.all(1, status_color),
                                 border_radius=4,
-                                padding=ft.padding.symmetric(horizontal=8, vertical=3),
+                                padding=ft.Padding(left=8, top=3, right=8, bottom=3),
                                 width=64,
                             ),
                         ], spacing=12,
                            vertical_alignment=ft.CrossAxisAlignment.CENTER),
                         bgcolor=th.card(page),
                         border_radius=10,
-                        border=ft.border.all(
+                        border=ft.Border.all(
                             1,
                             ft.Colors.with_opacity(0.35, th.danger(page)) if critico or esgotado
                             else ft.Colors.with_opacity(0.25, th.DARK_WARNING) if baixo
                             else ft.Colors.with_opacity(0.15, color),
                         ),
-                        padding=ft.padding.symmetric(horizontal=16, vertical=12),
+                        padding=ft.Padding(left=16, top=12, right=16, bottom=12),
                         opacity=0.55 if esgotado else 1.0,
-                        margin=ft.margin.only(bottom=6),
+                        margin=ft.Margin(bottom=6),
                     )
                 )
             return rows
@@ -246,7 +246,7 @@ class EstoquePage:
                         text_align=ft.TextAlign.CENTER),
                 ft.Text("Status", size=11, color=th.muted(page), width=64),
             ], spacing=12),
-            padding=ft.padding.symmetric(horizontal=16, vertical=6),
+            padding=ft.Padding(left=16, top=6, right=16, bottom=6),
         )
 
         lista = ft.Column(ref=lista_ref, controls=_build_rows(_FILTRO_TODOS), spacing=0)
@@ -314,7 +314,7 @@ class EstoquePage:
                 bgcolor=th.card(page),
                 border_radius=th.RADIUS_CARD,
                 shadow=th.card_shadows(th.is_dark(page)),
-                padding=ft.padding.all(16),
+                padding=ft.Padding(left=16, top=16, right=16, bottom=16),
                 expand=True,
             )
 

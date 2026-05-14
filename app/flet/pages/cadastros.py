@@ -33,35 +33,39 @@ class CadastrosPage:
         page = self._ctrl.page
 
         tabs = ft.Tabs(
+            length=3,
             selected_index=self._tab_index,
             on_change=self._on_tab_change,
             animation_duration=200,
-            label_color=th.primary(page),
-            unselected_label_color=th.muted(page),
-            indicator_color=th.primary(page),
-            indicator_border_radius=ft.border_radius.only(top_left=4, top_right=4),
-            tabs=[
-                ft.Tab(label="Produtos",   icon=ft.Icons.INVENTORY_2),
-                ft.Tab(label="Clientes",   icon=ft.Icons.PEOPLE),
-                ft.Tab(label="Operadores", icon=ft.Icons.BADGE),
-            ],
+            expand=True,
+            content=ft.Column(
+                expand=True,
+                controls=[
+                    ft.TabBar(
+                        tabs=[
+                            ft.Tab(label="Produtos",   icon=ft.Icons.INVENTORY_2),
+                            ft.Tab(label="Clientes",   icon=ft.Icons.PEOPLE),
+                            ft.Tab(label="Operadores", icon=ft.Icons.BADGE),
+                        ]
+                    ),
+                    ft.TabBarView(
+                        expand=True,
+                        controls=[
+                            self._build_produtos(page),
+                            self._build_clientes(page),
+                            self._build_operadores(page),
+                        ],
+                    ),
+                ],
+            ),
         )
-
-        if self._tab_index == 0:
-            content = self._build_produtos(page)
-        elif self._tab_index == 1:
-            content = self._build_clientes(page)
-        else:
-            content = self._build_operadores(page)
 
         self._ctrl.set_content(
             ft.Column([
                 self._build_header(page),
                 ft.Container(height=4),
                 tabs,
-                ft.Container(height=12),
-                content,
-            ], spacing=0),
+            ], spacing=0, expand=True),
         )
 
     def _on_tab_change(self, e):
@@ -101,7 +105,7 @@ class CadastrosPage:
             style=ft.ButtonStyle(
                 bgcolor=th.primary(page), color=ft.Colors.WHITE,
                 shape=ft.RoundedRectangleBorder(radius=th.RADIUS_BTN),
-                padding=ft.padding.symmetric(horizontal=20, vertical=12),
+                padding=ft.Padding(left=20, top=12, right=20, bottom=12),
             ),
         )
 
@@ -117,7 +121,7 @@ class CadastrosPage:
                 ft.Column(rows, spacing=4) if rows else ft.Container(
                     ft.Text("Nenhum produto cadastrado.", size=13,
                             color=th.muted(page)),
-                    padding=ft.padding.all(24),
+                    padding=ft.Padding(left=24, top=24, right=24, bottom=24),
                 ),
             ], spacing=10),
             padding=18,
@@ -141,7 +145,7 @@ class CadastrosPage:
                             color=ft.Colors.WHITE,
                             weight=ft.FontWeight.BOLD),
                     bgcolor=color, border_radius=4,
-                    padding=ft.padding.symmetric(horizontal=5, vertical=2),
+                    padding=ft.Padding(left=5, top=2, right=5, bottom=2),
                     width=36,
                 ),
                 ft.Text(p.nome, size=13, color=th.text(page), expand=True,
@@ -167,8 +171,8 @@ class CadastrosPage:
             ], spacing=10, vertical_alignment=ft.CrossAxisAlignment.CENTER),
             bgcolor=th.card(page),
             border_radius=10,
-            border=ft.border.all(1, ft.Colors.with_opacity(0.12, color)),
-            padding=ft.padding.symmetric(horizontal=14, vertical=8),
+            border=ft.Border.all(1, ft.Colors.with_opacity(0.12, color)),
+            padding=ft.Padding(left=14, top=8, right=14, bottom=8),
         )
 
     def _form_produto(self, page, produto=None):
@@ -243,7 +247,7 @@ class CadastrosPage:
             style=ft.ButtonStyle(
                 bgcolor=th.primary(page), color=ft.Colors.WHITE,
                 shape=ft.RoundedRectangleBorder(radius=th.RADIUS_BTN),
-                padding=ft.padding.symmetric(horizontal=20, vertical=12),
+                padding=ft.Padding(left=20, top=12, right=20, bottom=12),
             ),
         )
 
@@ -259,7 +263,7 @@ class CadastrosPage:
                 ft.Column(rows, spacing=4) if rows else ft.Container(
                     ft.Text("Nenhum cliente cadastrado.", size=13,
                             color=th.muted(page)),
-                    padding=ft.padding.all(24),
+                    padding=ft.Padding(left=24, top=24, right=24, bottom=24),
                 ),
             ], spacing=10),
             padding=18,
@@ -283,7 +287,7 @@ class CadastrosPage:
                             color=ft.Colors.WHITE,
                             weight=ft.FontWeight.BOLD),
                     bgcolor=color, border_radius=4,
-                    padding=ft.padding.symmetric(horizontal=5, vertical=2),
+                    padding=ft.Padding(left=5, top=2, right=5, bottom=2),
                     width=36,
                 ),
                 ft.Text(c.nome, size=13, color=th.text(page), expand=True,
@@ -304,8 +308,8 @@ class CadastrosPage:
             ], spacing=10, vertical_alignment=ft.CrossAxisAlignment.CENTER),
             bgcolor=th.card(page),
             border_radius=10,
-            border=ft.border.all(1, ft.Colors.with_opacity(0.12, color)),
-            padding=ft.padding.symmetric(horizontal=14, vertical=8),
+            border=ft.Border.all(1, ft.Colors.with_opacity(0.12, color)),
+            padding=ft.Padding(left=14, top=8, right=14, bottom=8),
         )
 
     def _form_cliente(self, page, cliente=None):
@@ -363,7 +367,7 @@ class CadastrosPage:
             style=ft.ButtonStyle(
                 bgcolor=th.primary(page), color=ft.Colors.WHITE,
                 shape=ft.RoundedRectangleBorder(radius=th.RADIUS_BTN),
-                padding=ft.padding.symmetric(horizontal=20, vertical=12),
+                padding=ft.Padding(left=20, top=12, right=20, bottom=12),
             ),
         )
 
@@ -379,7 +383,7 @@ class CadastrosPage:
                 ft.Column(rows, spacing=4) if rows else ft.Container(
                     ft.Text("Nenhum operador cadastrado.", size=13,
                             color=th.muted(page)),
-                    padding=ft.padding.all(24),
+                    padding=ft.Padding(left=24, top=24, right=24, bottom=24),
                 ),
             ], spacing=10),
             padding=18,
@@ -409,7 +413,7 @@ class CadastrosPage:
                             color=ft.Colors.WHITE,
                             weight=ft.FontWeight.BOLD),
                     bgcolor=op.cor, border_radius=4,
-                    padding=ft.padding.symmetric(horizontal=5, vertical=2),
+                    padding=ft.Padding(left=5, top=2, right=5, bottom=2),
                     width=36,
                 ),
                 ft.Text(op.nome, size=13, color=th.text(page), expand=True,
@@ -417,9 +421,9 @@ class CadastrosPage:
                 ft.Container(
                     ft.Text(op.cargo, size=10, color=cargo_color,
                             weight=ft.FontWeight.W_600),
-                    border=ft.border.all(1, cargo_color),
+                    border=ft.Border.all(1, cargo_color),
                     border_radius=4,
-                    padding=ft.padding.symmetric(horizontal=8, vertical=3),
+                    padding=ft.Padding(left=8, top=3, right=8, bottom=3),
                     width=80,
                 ),
                 ft.IconButton(
@@ -438,8 +442,8 @@ class CadastrosPage:
             ], spacing=10, vertical_alignment=ft.CrossAxisAlignment.CENTER),
             bgcolor=th.card(page),
             border_radius=10,
-            border=ft.border.all(1, ft.Colors.with_opacity(0.15, op.cor)),
-            padding=ft.padding.symmetric(horizontal=14, vertical=8),
+            border=ft.Border.all(1, ft.Colors.with_opacity(0.15, op.cor)),
+            padding=ft.Padding(left=14, top=8, right=14, bottom=8),
         )
 
     def _form_operador(self, page, operador=None):
@@ -447,7 +451,7 @@ class CadastrosPage:
         tf_nome = self._ctrl.make_text_field("Nome", "Ex: João Silva")
         dd_cargo = ft.Dropdown(
             label="Cargo",
-            options=[ft.dropdown.Option(c) for c in _CARGOS],
+            options=[ft.DropdownOption(c) for c in _CARGOS],
             border_radius=th.RADIUS_INPUT,
             border_color=th.border(page),
             focused_border_color=th.primary(page),
@@ -471,7 +475,7 @@ class CadastrosPage:
                     border_radius=50,
                     width=28, height=28,
                     alignment=ft.Alignment(0, 0),
-                    border=ft.border.all(2, ft.Colors.WHITE) if is_selected else None,
+                    border=ft.Border.all(2, ft.Colors.WHITE) if is_selected else None,
                     on_click=lambda e, cor=c: _select_color(cor),
                 ))
             return ft.Row(circles, spacing=6, wrap=True)
@@ -551,7 +555,7 @@ class CadastrosPage:
             ], spacing=10),
             content=ft.Container(
                 content=ft.Column(fields, spacing=12, tight=True, width=380),
-                padding=ft.padding.only(top=8, bottom=4),
+                padding=ft.Padding(top=8, bottom=4),
             ),
             actions=[
                 ft.TextButton(
@@ -566,7 +570,7 @@ class CadastrosPage:
                     style=ft.ButtonStyle(
                         bgcolor=th.primary(page), color=ft.Colors.WHITE,
                         shape=ft.RoundedRectangleBorder(radius=th.RADIUS_BTN),
-                        padding=ft.padding.symmetric(horizontal=20, vertical=12),
+                        padding=ft.Padding(left=20, top=12, right=20, bottom=12),
                     ),
                 ),
             ],
@@ -595,7 +599,7 @@ class CadastrosPage:
                     ft.Text("Esta ação não pode ser desfeita.",
                             size=12, color=th.muted(page)),
                 ], spacing=6, tight=True, width=340),
-                padding=ft.padding.only(top=4, bottom=4),
+                padding=ft.Padding(top=4, bottom=4),
             ),
             actions=[
                 ft.TextButton(
@@ -610,7 +614,7 @@ class CadastrosPage:
                     style=ft.ButtonStyle(
                         bgcolor=th.danger(page), color=ft.Colors.WHITE,
                         shape=ft.RoundedRectangleBorder(radius=th.RADIUS_BTN),
-                        padding=ft.padding.symmetric(horizontal=20, vertical=12),
+                        padding=ft.Padding(left=20, top=12, right=20, bottom=12),
                     ),
                 ),
             ],

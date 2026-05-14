@@ -83,7 +83,7 @@ class PageController:
                 bgcolor=th.primary(self._page),
                 color=ft.Colors.WHITE,
                 shape=ft.RoundedRectangleBorder(radius=th.RADIUS_BTN),
-                padding=ft.padding.symmetric(horizontal=28, vertical=14),
+                padding=ft.Padding(left=28, top=14, right=28, bottom=14),
                 animation_duration=180,
             ),
         )
@@ -96,7 +96,7 @@ class PageController:
                 color=th.danger(self._page),
                 side=ft.BorderSide(color=th.danger(self._page), width=1.5),
                 shape=ft.RoundedRectangleBorder(radius=th.RADIUS_BTN),
-                padding=ft.padding.symmetric(horizontal=28, vertical=14),
+                padding=ft.Padding(left=28, top=14, right=28, bottom=14),
             ),
         )
 
